@@ -1,0 +1,17 @@
+%p
+  %strong Name:
+  = @enemy.name
+%p
+  %strong Health:
+  = @enemy.health
+%p
+  %strong Health max:
+  = @enemy.health_max
+%p
+  %strong Loc x:
+  = @enemy.loc_x
+%p
+  %strong Loc y:
+  = @enemy.loc_y
+
+== #{ link_to 'Edit', edit_enemy_path(@enemy) } | #{ link_to 'Back', enemies_path }

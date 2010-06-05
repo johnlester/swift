@@ -1,0 +1,14 @@
+- form_for(@character) do |f|
+  = f.error_messages
+  
+  .field
+    = f.label :name
+    %br
+    = f.text_field :name
+  .field
+    = f.label :health
+    %br
+    = f.text_field :health
+
+  .actions
+    = f.submit

@@ -1,0 +1,7 @@
+%h1 Welcome controller, index.html.haml
+
+- if user_signed_in?
+	Welcome, "#{current_user.email}"
+- else
+	Welcome. You are not signed in.
+	= link_to "Sign in", new_session_path(:user)

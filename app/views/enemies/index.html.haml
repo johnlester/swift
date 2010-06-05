@@ -1,0 +1,22 @@
+%h1 Listing enemies
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Health
+      %th Health max
+      %th{ :colspan => 3 }
+  
+  %tbody
+    - for enemy in @enemies
+      %tr{ :class => cycle(:odd, :even) }
+        %td= enemy.name
+        %td= enemy.health
+        %td= enemy.health_max
+        %td= link_to 'Show', enemy
+        %td= link_to 'Edit', edit_enemy_path(enemy)
+        %td= link_to 'Destroy', enemy, :confirm => 'Are you sure?', :method => :delete
+
+%br
+= link_to 'New enemy', new_enemy_path
