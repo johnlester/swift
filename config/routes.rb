@@ -6,6 +6,8 @@ Swift::Application.routes.draw do |map|
   resources :characters
   devise_for :users
 
+  match 'play' => "play#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

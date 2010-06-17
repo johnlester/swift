@@ -6,9 +6,17 @@ class User
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many_related :battles
   has_many_related :characters
-  has_many_related :enemies
-
+    
   field :name
+
+  def active_battle
+    self.battles.where(:active => true).first
+  end
+
+  def active_characters
+    self.characters   #would need to expand eventually
+  end
 
 end
