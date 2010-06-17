@@ -87,7 +87,7 @@ class Battle
     case current_character.career
     when 'Void Warrior'
 
-      basic_list << { :description => "Bellow with rage, emboldening your allies' melee attacks",
+      basic_list << { :description => "Call out a piercing ululation, emboldening your allies' melee attacks",
                       :frequency => 100,
                       :value => 50,
                       :effects => [
