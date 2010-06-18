@@ -1,0 +1,12 @@
+defaults: &defaults
+  my_const1: some value
+  my_const2: some other value
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
