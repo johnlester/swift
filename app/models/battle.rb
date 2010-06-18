@@ -87,7 +87,7 @@ class Battle
     case current_character.career
     when 'Void Warrior'
 
-      basic_list << { :description => "Bellow with rage, emboldening your allies' melee attacks",
+      basic_list << { :description => "Call out a piercing ululation, emboldening your allies' melee attacks",
                       :frequency => 100,
                       :value => 50,
                       :effects => [
@@ -99,8 +99,16 @@ class Battle
                       :frequency => 100,
                       :value => 50,
                       :effects => [
-                                  {:targets => :melee_possible, :delivery => :melee, :odds => :80, :effect => :main_weapon, :magnitude => 30},
+                                  {:targets => :melee_possible, :delivery => :melee, :odds => 80, :effect => :main_weapon, :magnitude => 30},
                                   {:targets => :prior, :delivery => :melee, :contigent => true, :odds => :always, :effect => :no_spellcasting, :duration => 1}
+                                  ]
+                    }
+
+      basic_list << { :description => "Embue TARGET with the Void, reducing all damage TARGET_PRONOUN takes by 50% for the next 3 rounds",
+                      :frequency => 200,
+                      :value => 100,
+                      :effects => [
+                                  {:targets => :self, :delivery => :always, :odds => always, :effect => :reduce_all_damage, :duration => 3}
                                   ]
                     }
 
