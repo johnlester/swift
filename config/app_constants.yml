@@ -1,6 +1,55 @@
 defaults: &defaults
-  my_const1: some value
-  my_const2: some other value
+  :options:
+    - :name: :ululation
+      :agent_prereqs: 
+        :career: :void_warrior
+      :description: "Call out a piercing ululation, emboldening your allies' melee attacks"
+      :frequency: 100
+      :value: 50
+      :repeatable: false
+      :effects:
+        - :targets: :all_allies
+          :delivery: :sound
+          :odds: :always
+          :effect: :improve_melee_odds
+          :magnitude: 30
+
+    - :name: :distracting_rush
+      :agent_prereqs: 
+        :career: :void_warrior
+      :target_prereqs:
+        :spellcaster: true
+      :description: "Rush TARGET, causing DAMAGE damage and distracting TARGET_PRONOUN from spellcasting next turn"
+      :frequency: 100
+      :value: 50
+      :repeatable: false
+      :effects:
+        - :targets: :melee_possible
+          :delivery: :melee
+          :odds: :80
+          :effect: :main_weapon
+          :magnitude: 30
+        - :targets: :prior
+          :delivery: :melee
+          :contingent: true
+          :odds: :always
+          :effect: :no_spellcasting
+          :duration: 1
+
+    - :name: :voidwalk
+      :agent_prereqs: 
+        :career: :void_warrior
+      :description: "Embue TARGET with the Void, reducing all damage TARGET_PRONOUN takes by 50% for the next 3 rounds"
+      :frequency: 200
+      :value: 100
+      :repeatable: false
+      :effects:
+        - :targets: :self
+          :delivery: :always
+          :odds: :always
+          :effect: :voidwalk
+          :duration: 3
+
 
 development:
   <<: *defaults
