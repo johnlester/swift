@@ -8,11 +8,11 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: jltestapp_development
+  database: swift_development
 
 test:
   <<: *defaults
-  database: jltestapp_test
+  database: swift_test
 
 # set these environment variables on your prod server
 production:

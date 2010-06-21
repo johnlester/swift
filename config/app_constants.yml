@@ -1,5 +1,62 @@
 defaults: &defaults
-  :options:
+  :combat_options:
+    #TO DO: maybe change target_prereqs to be per-effect
+
+    # Basic untrained actions
+    - :name: :pray
+      :description: "Pray for help!"
+      :frequency: 100
+      :value: 100
+      :repeatable: true
+      :effects:
+        - :targets: :self
+          :delivery: :always
+          :odds: :always
+          :effect: :pray_for_help
+
+
+    # Object-based actions: potions, activated magic item powers, etc.
+    
+    # Mode-based actions: lich, skeleton
+
+    # Species-based actions
+
+    # Personal history -related actions
+    
+    # Enemy-specific actions
+    
+    # Location-based actions
+
+    # Fear reactions
+    - :name: :cower
+      :agent_prereqs: 
+        :scared: true
+      :description: "Cower in abject fear"
+      :frequency: 100
+      :value: 100
+      :repeatable: true
+      :effects:
+        - :targets: :self
+          :delivery: :always
+          :odds: :always
+          :effect: :improve_melee_defense
+          :magnitude: 20
+
+    - :name: :panic
+      :agent_prereqs: 
+        :scared: true
+      :description: "Run around screaming in panic"
+      :frequency: 100
+      :value: 100
+      :repeatable: true
+      :effects:
+        - :targets: :self
+          :delivery: :always
+          :odds: :always
+          :effect: :improve_missile_defense
+          :magnitude: 20
+
+    # Career: Void Warrior
     - :name: :ululation
       :agent_prereqs: 
         :career: :void_warrior
@@ -26,7 +83,7 @@ defaults: &defaults
       :effects:
         - :targets: :melee_possible
           :delivery: :melee
-          :odds: :80
+          :odds: 80
           :effect: :main_weapon
           :magnitude: 30
         - :targets: :prior
@@ -50,6 +107,25 @@ defaults: &defaults
           :effect: :voidwalk
           :duration: 3
 
+    - :name: :shield_ram
+      :agent_prereqs: 
+        :career: :void_warrior
+        :using_shield: true
+      :description: "Ram TARGET with SHIELD, causing DAMAGE damage and perhaps also knocking TARGET_PRONOUN down"
+      :frequency: 100
+      :value: 100
+      :repeatable: true
+      :effects:
+        - :targets: :melee_possible
+          :delivery: :melee
+          :odds: 120
+          :effect: :blunt_force
+          :magnitude: 100
+        - :targets: :prior
+          :delivery: :melee
+          :contingent: true
+          :odds: 30
+          :effect: :konckdown
 
 development:
   <<: *defaults

@@ -39,6 +39,7 @@ class Battle
     self.save
   end
   
+  #Non-player characters
   def enemies
     self.characters.where(:player_character => false)
   end
@@ -70,72 +71,73 @@ class Battle
     self.turn_order << self.turn_order.shift
   end
   
-  # Compile long list of possible actions for current character
-  def long_action_list
-    basic_list = [] # individual actions, without assigned targets
-    # Basic actions (simple evasion, simple attacks)
-    # => Slap
-    # => Kick
-    # => Cringe
-    # => Run around screaming
-    # => Stay wary
+  def opponents_of(character)
     
-    # Object-based actions
-    # => Drink potions
+  end
+  
+  def allies_of(character)
     
-    # Career-based actions
-    case current_character.career
-    when 'Void Warrior'
+  end
 
-      basic_list << { :description => "Call out a piercing ululation, emboldening your allies' melee attacks",
-                      :frequency => 100,
-                      :value => 50,
-                      :effects => [
-                                  {:targets => :all_allies, :delivery => :sound, :odds => :always, :effect => :improve_melee_odds, :magnitude => 30}
-                                  ]
-                    }
-
-      basic_list << { :description => "Rush TARGET, causing DAMAGE damage and distracting TARGET_PRONOUN from spellcasting next turn",
-                      :frequency => 100,
-                      :value => 50,
-                      :effects => [
-                                  {:targets => :melee_possible, :delivery => :melee, :odds => 80, :effect => :main_weapon, :magnitude => 30},
-                                  {:targets => :prior, :delivery => :melee, :contigent => true, :odds => :always, :effect => :no_spellcasting, :duration => 1}
-                                  ]
-                    }
-
-      basic_list << { :description => "Embue TARGET with the Void, reducing all damage TARGET_PRONOUN takes by 50% for the next 3 rounds",
-                      :frequency => 200,
-                      :value => 100,
-                      :effects => [
-                                  {:targets => :self, :delivery => :always, :odds => always, :effect => :reduce_all_damage, :duration => 3}
-                                  ]
-                    }
-
-      if current_character.using_shield?
-        basic_list << { :description => "Ram TARGET with SHIELD, causing DAMAGE damage, and perhaps also knocking TARGET_PRONOUN down",
-                        :frequency => 100,
-                        :value => 100,
-                        :effects => [ 
-                                    {:targets => :melee_possible, :delivery => :melee, :odds => 120, :effect => :blunt_force, :magnitude => 100},
-                                    {:targets => :prior, :delivery => :melee, :contingent => true, :odds => 20, :effect => :knockdown}
-                                    ]
-                      }
+  # TO DO: melee engagement logic
+  def melee_possible(attacker, defender)
+    true
+  end
+  
+  def current_targets(targets_type)
+    result = []
+    case targets_type
+    when :self
+      result << current_character
+    when :melee_possible
+      opponents_of(current_character).each do |c|
+        result << c if melee_possible(current_character, c)
       end
-      
-      
+    when :melee_active
+        #TO DO
+    when :all_allies
+      result = allies_of(current_character)
     end
-    # Weapon-based actions
+  end
+  
+  # TO CONSIDER: separate combat options class?
+  # Compile long list of possible actions for current character
+  def long_options_list
+    long_list = [] # individual actions, without assigned targets
     
-    # Mode-based actions
-    
-    # Species-based actions
+    APP_CONSTANTS[:combat_options].each do |option|
+      can_do = true
+      # Current character prereqs
+      if option[:agent_prereqs]
+        option[:agent_prereqs].each do |prereq, status|
+          can_do = can_do && (current_character.send(prereq) == status)
+        end
+      end
+      next unless can_do
+      # Location prereqs
+      if option[:location_prereqs]
+        option[:ocation_prereqs].each do |prereq, status|
+          can_do = can_do && (current_character.send(prereq) == status)
+        end
+      end
 
-    # Opponent individual-history-based actions (e.g. planar summons who desire vengeance against the enemy)
+      # TO DO: other option prereqs
 
-    # Self individual-history-based actions (e.g. gods who owe a favor)
+      long_list << deep_clone(option) if can_do
+    end
+    return long_list
+  end
 
-    # Assign targets to each action, and calculate damage and % chance
+  # Assign targets to each action, and calculate damage and % chance
+  def long_options_list_with_targets
+      long_list = long_option_list
+      long_list.each do |option|
+        # process target prereqs
+        # if no acceptable target, delete option from long_list
+        # pick target and store in long_list
+      end
+      return long_list
+  end
 
     # Combine individual actions
   end

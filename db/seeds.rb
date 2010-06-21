@@ -9,9 +9,9 @@ user = User.create!(:email => "johnlester@gmail.com", :password => "jim1dog", :n
 
 #Create champions for user to play with
 champions_to_create = [
-                        {:player_character => true, :name => "Tanko", :health_max => 150, :species => "Essen", :career => "Void Warrior"},
-                        {:player_character => true, :name => "Asiqi", :health_max => 80, :species => "Taboriin", :career => "Primal"},
-                        {:player_character => true, :name => "Loe", :health_max => 100, :species => "Human", :career => "Divine"}
+                        {:player_character => true, :name => "Tanko", :health_max => 150, :species => "Essen", :career => :void_warrior},
+                        {:player_character => true, :name => "Asiqi", :health_max => 80, :species => "Taboriin", :career => :primal},
+                        {:player_character => true, :name => "Loe", :health_max => 100, :species => "Human", :career => :divine}
                         ]
 champions_to_create.each do |c|
   ch = Character.create!(c)
@@ -20,7 +20,7 @@ end
 
 # Create a battle document and make it ready for play
 enemies_to_create = [
-                        {:player_character => false, :name => "Gregor", :health_max => 100, :species => "Essen", :career => "Primal", :modes => ["Lich"]},
+                        {:player_character => false, :name => "Gregor", :health_max => 100, :species => "Essen", :career => :primal, :modes => ["Lich"]},
                         {:player_character => false, :name => "Okko", :health_max => 50, :species => "Human", :modes => ["Skeleton"]},
                         {:player_character => false, :name => "Pomodarodoro", :health_max => 150, :species => "Stark"}
                         ]

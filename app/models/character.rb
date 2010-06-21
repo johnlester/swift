@@ -33,6 +33,11 @@ class Character
     
   end
   
+  # TO DO: implement fear logic
+  def scared
+    false
+  end
+  
   # def enemies_killed
   
   #What do I need to know about this character in a battle?
